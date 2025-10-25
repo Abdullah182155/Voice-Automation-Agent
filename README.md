@@ -106,3 +106,80 @@ python demo.py
 - Microphone for voice input
 - Speakers/headphones for voice output
 - Internet connection for LLM and TTS services
+
+## 🧪 Testing
+
+The project includes comprehensive testing:
+
+- **Unit Tests**: Individual component testing
+- **Integration Tests**: End-to-end workflow testing
+- **Validation Tests**: Input validation testing
+- **Demo Scripts**: Feature demonstration
+
+## 📊 Features
+
+### Smart Date Handling
+- Processes "today", "tomorrow", "next week"
+- Converts relative dates to absolute dates
+- Validates future dates only
+
+### Robust Validation
+- Date/time format validation
+- Input sanitization
+- Error handling and recovery
+
+### Multi-Source Integration
+- Local appointment storage
+- External API integration
+- Calendar system sync
+- ICS export functionality
+
+## 🚨 Troubleshooting
+
+### Common Issues
+1. **Audio Problems**: Check microphone/speaker connections
+2. **API Errors**: Verify API keys in `.env` file
+3. **Model Loading**: Ensure internet connection for model download
+4. **Permission Issues**: Check microphone permissions
+
+### Performance Tips
+- Use GPU acceleration for faster processing
+- Choose appropriate Whisper model size
+- Ensure good audio quality for better recognition
+
+## 📝 Development
+
+### Adding Features
+1. **New Commands**: Update prompts in `prompts/`
+2. **API Integration**: Extend `utils/api_client.py`
+3. **Calendar Features**: Modify `utils/calendar_integration.py`
+4. **Validation**: Add rules to `utils/validation.py`
+
+### Code Structure
+- **Clean Architecture**: Modular, testable design
+- **Error Handling**: Comprehensive error recovery
+- **Logging**: Structured logging system
+- **Validation**: Input sanitization and validation
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
+
+## 📞 Support
+
+For issues and questions:
+- Check the troubleshooting section
+- Review logs for error details
+- Ensure proper configuration
+- Test with demo script first
+
+
+
