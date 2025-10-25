@@ -1,60 +1,108 @@
-# Voice Automation Agent App
+# Voice Automation Agent
 
-The Voice Automation Agent is an intelligent voice-based assistant that allows users to interact naturally through speech to view or book schedules.
-It uses speech recognition, natural language understanding (LLM), and text-to-speech to provide a smooth, hands-free scheduling experience.
+A clean, structured voice automation agent for appointment management with natural language processing and multi-source integration.
 
-Users can speak in English to ask questions like:
+## 🚀 Features
 
-“List my upcoming appointments.”
+- **Voice Recognition**: OpenAI Whisper for accurate speech-to-text
+- **Natural Language Processing**: Claude 3.5 Sonnet for intent recognition
+- **Text-to-Speech**: Google TTS for natural responses
+- **Appointment Management**: Book, cancel, and list appointments
+- **External API Integration**: Connect with scheduling services
+- **Calendar Integration**: Sync with calendar systems
+- **Current Date Handling**: Smart relative date processing
 
-“Book a meeting with Dr. Abdullah tomorrow at 3 PM.”
+## 📁 Project Structure
 
-The agent understands these commands using a Large Language Model (LLM) and converts them into structured actions that trigger API calls to a scheduling backend.
-
-
-## Requirements
-
-- python 3.10 
-
-### Install Python using MiniConda
-
-1) Download and install MiniConda from [here](https://docs.anaconda.com/free/miniconda/#quick-command-line-install)
-2) Create a new environment using the following command:
-```bash
-$ conda create -n  voice_agent python=3.10
 ```
-3) Activate the environment:
-```bash
-$ conda activate voice_agent
-```
-
-### (Optional) Setup you command line interface for better readability
-
-```bash
-export PS1="\[\033[01;32m\]\u@\h:\w\n\[\033[00m\]\$ "
-```
-
-
-## Installation
-
-### Install the required packages
-
-```bash
-$ pip install -r requirements.txt
+voice-automation-agent/
+├── voice_agent.py              # Main application
+├── config.py                   # Configuration management
+├── demo.py                     # Demo script
+├── test.py                     # Test script
+├── requirements.txt            # Dependencies
+├── README.md                   # Documentation
+├── .env                        # Environment variables
+├── data/                       # Data storage
+│   ├── schedules.json         # Local appointments
+│   └── calendar_events.json   # Calendar events
+├── prompts/                    # LLM prompts
+│   ├── system_prompt.txt      # System prompt
+│   └── user_prompt_template.txt # User prompt template
+└── utils/                      # Core modules
+    ├── scheduler.py           # Local appointment management
+    ├── speech_io.py           # Speech recognition/TTS
+    ├── llm_interface.py       # LLM integration
+    ├── api_client.py          # External API integration
+    ├── calendar_integration.py # Calendar system
+    ├── validation.py          # Input validation
+    ├── logger.py              # Logging system
+    └── managers.py            # Manager classes
 ```
 
-### Setup the environment variables
+## 🛠️ Installation
 
+1. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Configure environment**
+   Create `.env` file:
+   ```env
+   OPENROUTER_API_KEY=your_api_key_here
+   OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
+   api_url=https://openrouter.ai/api/v1/chat/completions
+   WHISPER_MODEL_SIZE=base
+   WHISPER_DEVICE=cpu
+   ```
+
+3. **Get API keys**
+   - Sign up at [OpenRouter](https://openrouter.ai/) for LLM access
+
+## 🎯 Usage
+
+### Run the Agent
 ```bash
-$ cp .env.example .env
+python voice_agent.py
 ```
 
-## Access Services
-
-- **FastAPI**: http://localhost:8000
-
-## Run the FastAPI server (Development Mode)
-
+### Test the System
 ```bash
-$ uvicorn main:app --reload --host 0.0.0.0 --port 5000
+python test.py
 ```
+
+### See Demo
+```bash
+python demo.py
+```
+
+## 🗣️ Voice Commands
+
+### Booking Appointments
+- "Book a doctor appointment for tomorrow at 2 PM"
+- "Schedule a meeting with John next Monday at 10 AM"
+- "I need to book a dentist appointment for December 15th at 3 PM"
+
+### Canceling Appointments
+- "Cancel my appointment with Dr. Smith"
+- "Cancel appointment ID 5"
+- "Remove my meeting tomorrow"
+
+### Listing Appointments
+- "Show me my appointments"
+- "What appointments do I have today?"
+- "List my schedule for this week"
+
+## 🔧 Configuration
+
+### Environment Variables
+- `OPENROUTER_API_KEY`: Your OpenRouter API key
+- `OPENROUTER_MODEL`: LLM model (default: claude-3.5-sonnet)
+- `WHISPER_MODEL_SIZE`: Whisper model size (default: base)
+- `WHISPER_DEVICE`: Processing device (cpu/cuda)
+
+### Audio Requirements
+- Microphone for voice input
+- Speakers/headphones for voice output
+- Internet connection for LLM and TTS services
