@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "date": "2025-10-26",
+        "time": "19:00",
+        "description": "new meeting with dr. Ahmed",
+        "timestamp": "2025-10-26T19:00:00"
+    },
+    {
+        "id": 2,
+        "date": "2025-10-25",
+        "time": "17:00",
+        "description": "MAC Restaurant",
+        "timestamp": "2025-10-25T17:00:00"
+    }
+]

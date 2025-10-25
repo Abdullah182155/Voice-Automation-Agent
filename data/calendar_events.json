@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Meeting with Dr. Brian",
+    "start": "2025-10-26T19:00:00",
+    "end": "2025-10-26T20:00:00",
+    "description": "Meeting with Dr. Brian",
+    "status": "confirmed",
+    "created_at": "2025-10-25T19:04:09.488604",
+    "calendar_type": "voice_automation"
+  },
+  {
+    "id": 1,
+    "title": "new meeting with dr. Ahmed",
+    "start": "2025-10-26T19:00:00",
+    "end": "2025-10-26T20:00:00",
+    "description": "new meeting with dr. Ahmed",
+    "status": "confirmed",
+    "created_at": "2025-10-25T19:35:29.685630",
+    "calendar_type": "voice_automation"
+  },
+  {
+    "id": 2,
+    "title": "MAC Restaurant",
+    "start": "2025-10-25T17:00:00",
+    "end": "2025-10-25T18:00:00",
+    "description": "MAC Restaurant",
+    "status": "confirmed",
+    "created_at": "2025-10-25T20:42:39.065006",
+    "calendar_type": "voice_automation"
+  }
+]

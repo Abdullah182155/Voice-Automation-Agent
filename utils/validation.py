@@ -6,6 +6,7 @@ Provides comprehensive validation for dates, times, and user inputs.
 import re
 from datetime import datetime, timedelta
 from typing import Optional, Tuple, Dict, Any
+import os
 
 class ValidationError(Exception):
     """Custom exception for validation errors."""

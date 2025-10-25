@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SCHEDULING_API_URL = os.getenv("SCHEDULING_API_URL", "http://localhost:8000/api/appointments")
+SCHEDULING_API_KEY = os.getenv("SCHEDULING_API_KEY", "demo_key")
 
 class SchedulingAPIClient:
     """
