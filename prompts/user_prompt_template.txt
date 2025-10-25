@@ -1,0 +1,74 @@
+User: "{user_query}"
+Extract the intent, date, time, description, and ID (if applicable) into a JSON object.
+Ensure dates are in YYYY-MM-DD and times in HH:MM (24-hour) format.
+If a date or time is relative, infer it based on the current date/time.
+
+IMPORTANT: Use the current date provided in the system prompt to calculate relative dates like "today", "tomorrow", "next Monday", etc.
+
+Example for Booking:
+User: "Book a dentist appointment for tomorrow at 11 AM."
+{{
+  "intent": "book_schedule",
+  "date": "2024-12-02",  // Calculate based on current date
+  "time": "11:00",
+  "description": "Dentist appointment",
+  "id": null,
+  "date_filter": null
+}}
+
+Example for Booking with Today:
+User: "Schedule a meeting today at 2 PM."
+{{
+  "intent": "book_schedule",
+  "date": "2024-12-01",  // Current date
+  "time": "14:00",
+  "description": "Meeting",
+  "id": null,
+  "date_filter": null
+}}
+
+Example for Canceling:
+User: "Cancel my meeting about project Alpha."
+{{
+  "intent": "cancel_schedule",
+  "date": null,
+  "time": null,
+  "description": "project Alpha",
+  "id": null,
+  "date_filter": null
+}}
+
+Example for Listing:
+User: "What are my appointments for today?"
+{{
+  "intent": "get_schedule",
+  "date": null,
+  "time": null,
+  "description": null,
+  "id": null,
+  "date_filter": "today"
+}}
+
+Example for Listing Tomorrow:
+User: "Show me my schedule for tomorrow."
+{{
+  "intent": "get_schedule",
+  "date": null,
+  "time": null,
+  "description": null,
+  "id": null,
+  "date_filter": "tomorrow"
+}}
+
+Example for unknown:
+User: "Tell me a joke."
+{{
+  "intent": "unknown",
+  "date": null,
+  "time": null,
+  "description": null,
+  "id": null,
+  "date_filter": null
+}}
+
+Now process the following:
