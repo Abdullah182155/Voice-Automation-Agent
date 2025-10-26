@@ -1,0 +1,13 @@
+[
+  {
+    "id": "EXT_20251026062552_31310e36",
+    "date": "2025-11-02",
+    "time": "10:00",
+    "description": "Doctor consultation",
+    "patient_name": "Voice User",
+    "contact_info": "voice@example.com",
+    "status": "confirmed",
+    "booking_timestamp": "2025-10-26T06:25:52.872044",
+    "confirmation_code": "CONF_20251026062552"
+  }
+]

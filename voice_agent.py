@@ -7,7 +7,6 @@ import json
 import time
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, Tuple
-import os
 
 # Import configuration and utilities
 from config import Config
@@ -16,6 +15,7 @@ from utils import (
     LLMResponseValidator, validate_environment,
     SchedulerManager, SpeechManager, LLMManager, APIManager, CalendarManager
 )
+from utils.data_integration import integration_manager
 
 class VoiceAgent:
     """Main Voice Automation Agent class."""
@@ -215,30 +215,69 @@ class VoiceAgent:
             self.speech.speak("I need either an appointment ID or a clear description to cancel an appointment. Please provide more details.")
     
     def _handle_list_appointments(self, intent_data: Dict[str, Any]):
-        """Handle appointment listing."""
+        """Handle appointment listing using integrated data."""
         date_filter = intent_data.get('date_filter')
         
-        # Get local appointments
-        local_summary = self.scheduler.list_appointments(date_filter=date_filter)
-        self.speech.speak(local_summary)
-        
-        # Get external appointments
-        external_appointments = self.api.get_appointments(date_filter)
-        if external_appointments and external_appointments.get("success"):
-            external_apts = external_appointments.get("appointments", [])
-            if external_apts:
-                self.speech.speak("I also found some appointments from the external service:")
-                for apt in external_apts:
-                    self.speech.speak(f"External appointment: {apt['description']} on {apt['date']} at {apt['time']}")
-        
-        # Get calendar events
-        calendar_events = self.calendar.get_events(date_filter)
-        if calendar_events:
-            self.speech.speak("Here are your calendar events:")
-            for event in calendar_events:
-                event_date = event['start'][:10]
-                event_time = event['start'][11:16]
-                self.speech.speak(f"Calendar event: {event['title']} on {event_date} at {event_time}")
+        try:
+            # Get unified appointments from all systems
+            all_appointments = integration_manager.get_all_appointments()
+            
+            if not all_appointments:
+                self.speech.speak("You have no appointments scheduled across all systems.")
+                return
+            
+            # Filter by date if specified
+            if date_filter:
+                filtered_appointments = []
+                for appt in all_appointments:
+                    if date_filter.lower() in appt.date.lower():
+                        filtered_appointments.append(appt)
+                all_appointments = filtered_appointments
+            
+            if not all_appointments:
+                self.speech.speak(f"You have no appointments for {date_filter}.")
+                return
+            
+            # Sort appointments by date and time
+            all_appointments.sort(key=lambda x: f"{x.date} {x.time}")
+            
+            # Create unified summary
+            summary = f"I found {len(all_appointments)} appointments across all your systems:\n\n"
+            
+            for appt in all_appointments:
+                source_info = f" ({appt.source})" if appt.source != "local" else ""
+                summary += f"- {appt.description} on {appt.date} at {appt.time}{source_info}\n"
+            
+            self.speech.speak(summary)
+            
+            # Also sync systems to ensure consistency
+            sync_results = integration_manager.sync_all_systems()
+            if sync_results.get("conflicts"):
+                self.speech.speak("I found some conflicts in your appointments. Please check the details.")
+            
+        except Exception as e:
+            self.logger.log_error(e, "Listing unified appointments")
+            # Fallback to individual system queries
+            self.speech.speak("Let me check your appointments from each system individually.")
+            
+            local_summary = self.scheduler.list_appointments(date_filter=date_filter)
+            self.speech.speak(local_summary)
+            
+            external_appointments = self.api.get_appointments(date_filter)
+            if external_appointments and external_appointments.get("success"):
+                external_apts = external_appointments.get("appointments", [])
+                if external_apts:
+                    self.speech.speak("I also found some appointments from the external service:")
+                    for apt in external_apts:
+                        self.speech.speak(f"External appointment: {apt['description']} on {apt['date']} at {apt['time']}")
+            
+            calendar_events = self.calendar.get_events(date_filter)
+            if calendar_events:
+                self.speech.speak("Here are your calendar events:")
+                for event in calendar_events:
+                    event_date = event['start'][:10]
+                    event_time = event['start'][11:16]
+                    self.speech.speak(f"Calendar event: {event['title']} on {event_date} at {event_time}")
     
     def _get_required_detail(self, detail_name: str, current_value: Optional[str]) -> Optional[str]:
         """Get required detail from user."""
